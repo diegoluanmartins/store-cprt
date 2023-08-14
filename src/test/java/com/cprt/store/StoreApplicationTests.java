@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.cprt.store.budget.Budget;import com.cprt.store.tax.TaxCalculator;
-import com.cprt.store.tax.TaxType;
+import com.cprt.store.tax.TaxICMS;
+import com.cprt.store.tax.TaxISS;
+import com.cprt.store.tax.Tax;
 
 @SpringBootTest
 class StoreApplicationTests {
@@ -24,8 +26,8 @@ class StoreApplicationTests {
 	void BudgetTest(){
 		Budget budget = new Budget(new BigDecimal("100"));
 		TaxCalculator calculator = new TaxCalculator();
-		assertEquals(new BigDecimal("10.0"), calculator.calculate(budget, TaxType.ICMS), "testing ICMS");
-		assertEquals(new BigDecimal("60.0"), calculator.calculate(budget, TaxType.ISS), "testing ISS");
+		assertEquals(new BigDecimal("10.0"), calculator.calculate(budget, new TaxICMS()), "testing ICMS");
+		assertEquals(new BigDecimal("6.00"), calculator.calculate(budget, new TaxISS()), "testing ISS");
 	}
 
 }
