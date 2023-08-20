@@ -7,9 +7,9 @@ import com.cprt.store.budget.Budget;
 public class DiscountCalculator {
 
     public BigDecimal calculate(Budget budget) {
-        Discount discount = new DiscountMultipleItems(
+        Discount discountChain = new DiscountMultipleItems(
                 new DiscountBudgetAboveValue(new WithoutDiscount()));
-        return discount.calculate(budget);
+        return discountChain.calculate(budget);
     }
 
 }

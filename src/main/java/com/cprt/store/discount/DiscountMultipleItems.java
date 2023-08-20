@@ -6,17 +6,22 @@ import com.cprt.store.budget.Budget;
 
 public class DiscountMultipleItems extends Discount {
 
+    private static final int MINIMUM_QTY = 5;
+    private static final BigDecimal PERCENTAGE = new BigDecimal("0.1");
+
     public DiscountMultipleItems(Discount next) {
         super(next);
     }
 
-    private static final int MINIMUM_QTY = 5;
-
-    public BigDecimal calculate(Budget budget) {
-        final BigDecimal discountPercentage = new BigDecimal("0.1");
-        if (budget.getQty() > MINIMUM_QTY) {
-            return budget.getValue().multiply(discountPercentage);
-        }
-        return next.calculate(budget);
+    @Override
+    public BigDecimal getDiscount(Budget budget) {
+        return budget.getValue().multiply(PERCENTAGE);
     }
+
+    @Override
+    public boolean isValid(Budget budget) {
+        return (budget.getQtyOfItem() > MINIMUM_QTY);
+    }
+
+    
 }

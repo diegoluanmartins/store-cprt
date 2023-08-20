@@ -11,8 +11,13 @@ public class WithoutDiscount extends Discount {
     }
 
     @Override
-    public BigDecimal calculate(Budget budget) {
+    public BigDecimal getDiscount(Budget budget) {
         return BigDecimal.ZERO;
+    }
+
+    @Override
+    public boolean isValid(Budget budget) {
+        return true;
     }
 
 }
