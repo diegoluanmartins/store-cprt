@@ -13,7 +13,7 @@ public class Approved extends BudgetState {
 
     @Override
     public void reprove(Budget budget) {
-        budget.setState(new Reprove());
+        budget.setState(new Reproved());
     }
 
     @Override

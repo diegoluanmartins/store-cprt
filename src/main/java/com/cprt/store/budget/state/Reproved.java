@@ -2,7 +2,7 @@ package com.cprt.store.budget.state;
 
 import com.cprt.store.budget.Budget;
 
-public class Reprove extends BudgetState {
+public class Reproved extends BudgetState {
 
     @Override
     public void complete(Budget budget) {

@@ -3,6 +3,7 @@ package com.cprt.store.budget;
 import java.math.BigDecimal;
 
 import com.cprt.store.budget.state.BudgetState;
+import com.cprt.store.budget.state.Completed;
 import com.cprt.store.budget.state.InAnalysis;
 
 public class Budget {
@@ -61,6 +62,10 @@ public class Budget {
 
     public void setState(BudgetState state) {
         this.state = state;
+    }
+
+    public boolean isCompleted() {
+        return this.state instanceof Completed;
     }
 
 }
