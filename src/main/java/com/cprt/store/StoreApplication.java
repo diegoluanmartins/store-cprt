@@ -8,7 +8,9 @@ import java.util.logging.Logger;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.cprt.store.budget.Budget;
+import com.cprt.store.budget.BudgetDAO;
 import com.cprt.store.discount.DiscountCalculator;
+import com.cprt.store.http.HttpClientStore;
 import com.cprt.store.invoice.CreateInvoice;
 import com.cprt.store.invoice.CreateInvoiceHandler;
 import com.cprt.store.invoice.action.SaveInvoiceOnDatabase;
@@ -72,6 +74,17 @@ public class StoreApplication {
 					new SendInvoiceEmail()
 					));
 		invoiceCreatorHandler.execute(invoiceCreator);
+	}
+
+	public static void testAdapter(){
+		LOGGER.log(Level.INFO, "Discount -------------------------------");
+		Budget budget1 = new Budget(new BigDecimal("100"), 5);
+		DiscountCalculator calculator = new DiscountCalculator();
+		LOGGER.log(Level.INFO, BASE_LOG, new Object[] { budget1, calculator.calculate(budget1) });
+		budget1.approve();
+		budget1.complete();
+		BudgetDAO budgetDao = new BudgetDAO(new HttpClientStore());
+		budgetDao.save(budget1);
 	}
 
 }
