@@ -38,6 +38,7 @@ public class StoreApplication {
 		TaxCalculator calculator = new TaxCalculator();
 		LOGGER.log(Level.INFO, BASE_LOG, new Object[] { "ISS", calculator.calculate(budget, new TaxISS()) });
 		LOGGER.log(Level.INFO, BASE_LOG, new Object[] { "ICMS", calculator.calculate(budget, new TaxICMS()) });
+		LOGGER.log(Level.INFO, BASE_LOG, new Object[] { "ICMS and ISS", calculator.calculate(budget, new TaxICMS(new TaxISS())) });
 	}
 
 	public static void testBudgetDiscounts() {
