@@ -8,7 +8,7 @@ public abstract class Tax {
     
     private Tax next;
 
-    public Tax(Tax next) {
+    protected Tax(Tax next) {
         this.next = next;
     }
 
