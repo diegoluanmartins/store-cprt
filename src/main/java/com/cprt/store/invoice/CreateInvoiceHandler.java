@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.cprt.store.budget.Budget;
+import com.cprt.store.budget.BudgetItem;
 import com.cprt.store.invoice.action.InvoiceCreationAction;
 
 public class CreateInvoiceHandler {
@@ -15,7 +16,7 @@ public class CreateInvoiceHandler {
     }
 
     public void execute(CreateInvoice invoiceData) {
-        Budget budget = new Budget(invoiceData.getBudgetValue(), invoiceData.getQtyOfItem());
+        Budget budget = new Budget(new BudgetItem(invoiceData.getBudgetValue()));
         LocalDate creationDate = LocalDate.now();
         Invoice invoice = new Invoice(invoiceData.getCustomerName(), creationDate, budget);
         actions.forEach(action -> action.execute(invoice));

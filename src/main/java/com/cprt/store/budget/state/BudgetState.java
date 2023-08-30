@@ -26,5 +26,10 @@ public abstract class BudgetState {
     public void complete(Budget budget){
         throw new DomainException(getExceptionMessage(this.getClass().getEnclosingMethod().getName()));
     }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
     
 }

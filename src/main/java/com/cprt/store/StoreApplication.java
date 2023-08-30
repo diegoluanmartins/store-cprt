@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.cprt.store.budget.Budget;
 import com.cprt.store.budget.BudgetDAO;
+import com.cprt.store.budget.BudgetItem;
 import com.cprt.store.discount.DiscountCalculator;
 import com.cprt.store.http.HttpClientStore;
 import com.cprt.store.invoice.CreateInvoice;
@@ -29,12 +30,13 @@ public class StoreApplication {
 		testBudgetTax();
 		testBudgetDiscounts();
 		testInvoice(new String[] { "Cptr Customer", "1000", "4" });
+		testComposition();
 		// SpringApplication.run(StoreApplication.class, args);
 	}
 
 	public static void testBudgetTax() {
 		LOGGER.log(Level.INFO, "Tax ------------------------------------");
-		Budget budget = new Budget(new BigDecimal("100"), 1);
+		Budget budget = new Budget(new BudgetItem(new BigDecimal("100")));
 		TaxCalculator calculator = new TaxCalculator();
 		LOGGER.log(Level.INFO, BASE_LOG, new Object[] { "ISS", calculator.calculate(budget, new TaxISS()) });
 		LOGGER.log(Level.INFO, BASE_LOG, new Object[] { "ICMS", calculator.calculate(budget, new TaxICMS()) });
@@ -43,9 +45,29 @@ public class StoreApplication {
 
 	public static void testBudgetDiscounts() {
 		LOGGER.log(Level.INFO, "Discount -------------------------------");
-		Budget budget1 = new Budget(new BigDecimal("100"), 5);
-		Budget budget2 = new Budget(new BigDecimal("100"), 6);
-		Budget budget3 = new Budget(new BigDecimal("1000"), 5);
+		
+		Budget budget1 = new Budget();
+		budget1.addItem(new BudgetItem(BigDecimal.TEN));
+		budget1.addItem(new BudgetItem(BigDecimal.TEN));
+		budget1.addItem(new BudgetItem(BigDecimal.TEN));
+		budget1.addItem(new BudgetItem(BigDecimal.TEN));
+		budget1.addItem(new BudgetItem(new BigDecimal("60")));
+
+		Budget budget2 = new Budget();
+		budget2.addItem(new BudgetItem(BigDecimal.TEN));
+		budget2.addItem(new BudgetItem(BigDecimal.TEN));
+		budget2.addItem(new BudgetItem(BigDecimal.TEN));
+		budget2.addItem(new BudgetItem(BigDecimal.TEN));
+		budget2.addItem(new BudgetItem(BigDecimal.TEN));
+		budget2.addItem(new BudgetItem(new BigDecimal("60")));
+
+		Budget budget3 = new Budget();
+		budget3.addItem(new BudgetItem(BigDecimal.valueOf(100)));
+		budget3.addItem(new BudgetItem(BigDecimal.valueOf(100)));
+		budget3.addItem(new BudgetItem(BigDecimal.valueOf(100)));
+		budget3.addItem(new BudgetItem(BigDecimal.valueOf(100)));
+		budget3.addItem(new BudgetItem(new BigDecimal("600")));
+		
 		DiscountCalculator calculator = new DiscountCalculator();
 		LOGGER.log(Level.INFO, BASE_LOG, new Object[] { budget1, calculator.calculate(budget1) });
 		LOGGER.log(Level.INFO, BASE_LOG, new Object[] { budget2, calculator.calculate(budget2) });
@@ -79,13 +101,29 @@ public class StoreApplication {
 
 	public static void testAdapter(){
 		LOGGER.log(Level.INFO, "Discount -------------------------------");
-		Budget budget1 = new Budget(new BigDecimal("100"), 5);
+		
+		Budget budget1 = new Budget();
+		budget1.addItem(new BudgetItem(BigDecimal.TEN));
+		budget1.addItem(new BudgetItem(BigDecimal.TEN));
+		budget1.addItem(new BudgetItem(BigDecimal.TEN));
+		budget1.addItem(new BudgetItem(BigDecimal.TEN));
+		budget1.addItem(new BudgetItem(new BigDecimal("60")));
+
 		DiscountCalculator calculator = new DiscountCalculator();
 		LOGGER.log(Level.INFO, BASE_LOG, new Object[] { budget1, calculator.calculate(budget1) });
 		budget1.approve();
 		budget1.complete();
 		BudgetDAO budgetDao = new BudgetDAO(new HttpClientStore());
 		budgetDao.save(budget1);
+	}
+
+	public static void testComposition(){
+		Budget old = new Budget(new BudgetItem(new BigDecimal("200")));
+		old.reprove();
+		Budget newBudget = new Budget(new BudgetItem(new BigDecimal("500")));
+		newBudget.addItem(old);
+		
+		LOGGER.log(Level.INFO, BASE_LOG, new Object[] { newBudget, newBudget.getValue() });
 	}
 
 }
