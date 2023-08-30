@@ -22,7 +22,7 @@ class TestStoreApplicationDiscount {
 
 
 	@Test
-	void testBudgetDiscounts() {
+	void execute() {
 		LOGGER.log(Level.INFO, "Discount -------------------------------");
 		
 		Budget budget1 = new Budget();

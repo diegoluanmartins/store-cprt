@@ -28,7 +28,7 @@ class TestStoreApplicationTax {
 	}
 	
 	@Test
-	void testBudgetTax() {
+	void execute() {
 		LOGGER.log(Level.INFO, "Tax ------------------------------------");
 		Budget budget = new Budget(new BudgetItem(new BigDecimal("100")));
 		TaxCalculator calculator = new TaxCalculator();

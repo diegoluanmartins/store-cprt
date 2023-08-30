@@ -23,7 +23,7 @@ class TestStoreApplicationInvoice {
 	private static final Logger LOGGER = Logger.getLogger("main");
 
 	@Test
-	void testInvoice() {
+	void execute() {
 		LOGGER.log(Level.INFO, "Invoice ------------------------------------");
 		String[] args = new String[] { "Cptr Customer", "1000", "4" };
 		String customerName = args[0];

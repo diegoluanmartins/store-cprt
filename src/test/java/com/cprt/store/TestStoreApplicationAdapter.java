@@ -25,7 +25,7 @@ class TestStoreApplicationAdapter {
 	private static final String BASE_LOG = "{0} = {1}";
 
 	@Test
-	void testAdapter(){
+	void execute(){
 		LOGGER.log(Level.INFO, "Discount -------------------------------");
 		
 		Budget budget1 = new Budget();
