@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.cprt.store.DomainException;
 import com.cprt.store.budget.state.BudgetState;
 import com.cprt.store.budget.state.Completed;
 import com.cprt.store.budget.state.InAnalysis;
 
-public class Budget implements Budgetable{
+public class Budget implements Budgetable {
 
     private BigDecimal value;
     private BudgetState state;
@@ -46,7 +47,12 @@ public class Budget implements Budgetable{
     }
 
     @Override
-    public BigDecimal getValue() {
+    public BigDecimal getValue(){
+        try {
+            Thread.sleep(2000L);
+        } catch (final InterruptedException e) {
+            throw new DomainException(Arrays.toString(e.getStackTrace()));
+        }
         return value;
     }
 
@@ -54,11 +60,11 @@ public class Budget implements Budgetable{
         return this.items.size();
     }
 
-    public void addItem(Budgetable item){
+    public void addItem(Budgetable item) {
         this.sumValue(item.getValue());
         this.items.add(item);
     }
- 
+
     private void sumValue(BigDecimal addValue) {
         this.value = this.value.add(addValue);
     }
@@ -66,11 +72,11 @@ public class Budget implements Budgetable{
     public BudgetState getState() {
         return state;
     }
-    
+
     public void setState(BudgetState state) {
         this.state = state;
     }
-    
+
     public boolean isCompleted() {
         return this.state instanceof Completed;
     }
