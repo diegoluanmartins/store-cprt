@@ -1,10 +1,8 @@
 package com.cprt.store;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
